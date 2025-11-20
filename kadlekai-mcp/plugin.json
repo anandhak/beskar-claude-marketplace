@@ -1,0 +1,38 @@
+{
+  "name": "kadlekai-mcp",
+  "version": "1.0.1",
+  "description": "Kadlekai time tracking MCP server integration for Claude Code",
+  "author": {
+    "name": "Beskar",
+    "email": "dev@beskar.tech"
+  },
+  "homepage": "https://gitlab.beskar.tech/beskar/kadlekai",
+  "repository": "https://gitlab.beskar.tech/beskar/kadlekai",
+  "license": "MIT",
+  "keywords": [
+    "time-tracking",
+    "productivity",
+    "mcp",
+    "kadlekai",
+    "worklog"
+  ],
+  "commands": "./commands",
+  "skills": "./skills",
+  "hooks": "./hooks/hooks.json",
+  "mcpServers": {
+    "kadlekai": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "https://beskar-kadlekai-mcp.s3.amazonaws.com/packages/kadlekai-mcp-1.0.1.tgz"
+      ],
+      "env": {
+        "KADLEKAI_API_TOKEN": "${KADLEKAI_API_TOKEN}",
+        "KADLEKAI_API_URL": "${KADLEKAI_API_URL:-https://kadle.ai}"
+      }
+    }
+  },
+  "postInstall": {
+    "message": "✅ Kadlekai MCP plugin installed!\n\n📋 Next steps:\n1. Set your API token: export KADLEKAI_API_TOKEN=your_token\n2. Set API URL (optional): export KADLEKAI_API_URL=https://kadle.ai\n3. Start tracking: /time:start working on my project\n\nAvailable commands:\n• /time:start - Start a timer\n• /time:stop - Stop timer\n• /time:status - Check status\n• /time:report - Generate reports\n\nNeed a token? Generate one from Kadlekai settings or use:\nbin/rails runner \"puts AuthenticationService.new(current_user: User.first, request: nil).create_api_key_for_user(User.first, client_name: 'Claude Code')[:auth_token]\""
+  }
+}

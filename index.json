@@ -1,0 +1,25 @@
+{
+  "name": "kadlekai-marketplace",
+  "owner": {
+    "name": "Beskar Technologies",
+    "email": "dev@beskar.tech"
+  },
+  "plugins": [
+    {
+      "name": "kadlekai-mcp",
+      "version": "1.0.1",
+      "description": "MCP server for Kadlekai time tracking - manage timers, worklogs, projects, and reports",
+      "author": {
+        "name": "Beskar Technologies",
+        "email": "dev@beskar.tech"
+      },
+      "keywords": [
+        "time-tracking",
+        "productivity",
+        "worklogs",
+        "reports"
+      ],
+      "source": "./kadlekai-mcp"
+    }
+  ]
+}
