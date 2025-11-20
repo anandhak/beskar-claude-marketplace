@@ -49,38 +49,51 @@ Ask for API URL or use default:
 
 ### 4. Configure Project-Specific MCP Server
 
-Configure the Kadlekai MCP server in PROJECT ROOT .claude.json (not ~/.claude.json):
+Configure the Kadlekai MCP server in the GLOBAL ~/.claude.json under the project's entry.
 
-Check if .claude.json exists in project root:
-- If not, create it with minimal structure
-- If yes, backup existing file
+**IMPORTANT**: Claude Code reads project MCP servers from `~/.claude.json` under `projects["/path/to/project"].mcpServers`, NOT from a local `.claude.json` file.
 
-Add/Update Kadlekai MCP configuration:
-- Use actual credential values
-- Add to .mcpServers.kadlekai in .claude.json
-- Use npx with S3 package URL (not local file path)
-- NO workspace_id needed (API determines workspace from token)
+Steps:
+1. Read the current ~/.claude.json
+2. Find or create the project entry under `projects[cwd]`
+3. Add/update the kadlekai MCP server configuration
+4. Write back to ~/.claude.json
 
-Create configuration file:
+Use jq or similar to update the JSON:
 ```bash
-cat > .claude.json << EOF
-{
-  "mcpServers": {
-    "kadlekai": {
-      "command": "npx",
-      "args": ["--yes", "https://beskar-kadlekai-mcp.s3.amazonaws.com/packages/kadlekai-mcp-latest.tgz"],
-      "env": {
-        "KADLEKAI_API_TOKEN": "$API_TOKEN",
-        "KADLEKAI_API_URL": "$API_URL"
-      }
+# Get current working directory
+CWD=$(pwd)
+
+# Update ~/.claude.json with the kadlekai MCP server for this project
+cat ~/.claude.json | jq --arg cwd "$CWD" --arg token "$API_TOKEN" --arg url "$API_URL" '
+  .projects[$cwd].mcpServers.kadlekai = {
+    "type": "stdio",
+    "command": "npx",
+    "args": ["-y", "https://beskar-kadlekai-mcp.s3.amazonaws.com/packages/kadlekai-mcp-latest.tgz"],
+    "env": {
+      "KADLEKAI_API_TOKEN": $token,
+      "KADLEKAI_API_URL": $url
     }
   }
-}
-EOF
+' > ~/.claude.json.tmp && mv ~/.claude.json.tmp ~/.claude.json
+```
+
+If the project entry doesn't exist, create it first:
+```bash
+cat ~/.claude.json | jq --arg cwd "$CWD" '
+  if .projects[$cwd] == null then
+    .projects[$cwd] = {
+      "allowedTools": [],
+      "mcpContextUris": [],
+      "mcpServers": {},
+      "hasTrustDialogAccepted": true
+    }
+  else . end
+' > ~/.claude.json.tmp && mv ~/.claude.json.tmp ~/.claude.json
 ```
 
 Offer options:
-1. Configure automatically (create the file)
+1. Configure automatically (update ~/.claude.json)
 2. Show manual instructions
 3. Skip (user will configure manually)
 
@@ -111,7 +124,7 @@ Ask user: "Have you restarted Claude Code? (yes/no)"
 ### 7. Verification
 
 After restart, test complete configuration:
-- Check if Kadlekai exists in project .claude.json
+- Check if Kadlekai exists in ~/.claude.json under projects[cwd].mcpServers
 - Test MCP connection by calling mcp__kadlekai__get_current_user
 - Verify API token works
 
@@ -136,7 +149,7 @@ If any step fails, enter troubleshooting mode:
 - Provide clear next actions
 - Offer manual fallbacks for all automation
 - Handle errors gracefully
-- Use project-specific .claude.json configuration (NOT global ~/.claude.json)
+- Configure MCP servers in ~/.claude.json under projects[cwd].mcpServers (NOT local .claude.json)
 - ALWAYS prompt for credentials even if config exists (user may want to update)
 - Remind users to restart Claude Code after configuration changes
 
