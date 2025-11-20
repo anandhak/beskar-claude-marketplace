@@ -1,10 +1,10 @@
 {
-  "hooks": [
-    {
-      "event": "SessionStart",
-      "type": "command",
-      "description": "Check for running timer at session start",
-      "command": "echo '⏱️ Kadlekai time tracking is active. Use /time:start to begin tracking.'"
-    }
-  ]
+  "hooks": {
+    "SessionStart": [
+      {
+        "type": "command",
+        "command": "echo '⏱️ Kadlekai time tracking is active. Use /time:start to begin tracking.'"
+      }
+    ]
+  }
 }
