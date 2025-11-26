@@ -12,8 +12,9 @@ Guide users through setting up Kadlekai time tracking integration with interacti
 ### 1. Check Current State
 
 Display welcome message and check project-specific configuration:
-- Check if `.claude.json` exists in project root (NOT ~/.claude.json)
-- Check if `kadlekai` MCP server is configured in `.claude.json`
+- Check if `~/.claude.json` exists
+- Check if current project path exists in `~/.claude.json` under `projects[cwd]`
+- Check if `kadlekai` MCP server is configured in `~/.claude.json` under `projects[cwd].mcpServers.kadlekai`
 - If configured, show current settings (API URL, masked token)
 
 ALWAYS offer to reconfigure, even if settings exist, because:
@@ -55,40 +56,42 @@ Configure the Kadlekai MCP server in the GLOBAL ~/.claude.json under the project
 
 Steps:
 1. Read the current ~/.claude.json
-2. Find or create the project entry under `projects[cwd]`
-3. Add/update the kadlekai MCP server configuration
-4. Write back to ~/.claude.json
+2. Get the current working directory (cwd)
+3. Find or create the project entry under `projects[cwd]`
+4. Add/update the kadlekai MCP server configuration under `projects[cwd].mcpServers.kadlekai`
+5. Write back to ~/.claude.json
 
-Use jq or similar to update the JSON:
+Use jq to update the JSON:
 ```bash
 # Get current working directory
 CWD=$(pwd)
 
-# Update ~/.claude.json with the kadlekai MCP server for this project
-cat ~/.claude.json | jq --arg cwd "$CWD" --arg token "$API_TOKEN" --arg url "$API_URL" '
-  .projects[$cwd].mcpServers.kadlekai = {
-    "type": "stdio",
-    "command": "npx",
-    "args": ["-y", "https://beskar-kadlekai-mcp.s3.amazonaws.com/packages/kadlekai-mcp-latest.tgz"],
-    "env": {
-      "KADLEKAI_API_TOKEN": $token,
-      "KADLEKAI_API_URL": $url
-    }
-  }
-' > ~/.claude.json.tmp && mv ~/.claude.json.tmp ~/.claude.json
-```
-
-If the project entry doesn't exist, create it first:
-```bash
+# First, ensure the project entry exists
 cat ~/.claude.json | jq --arg cwd "$CWD" '
   if .projects[$cwd] == null then
     .projects[$cwd] = {
       "allowedTools": [],
       "mcpContextUris": [],
       "mcpServers": {},
-      "hasTrustDialogAccepted": true
+      "hasTrustDialogAccepted": false,
+      "projectOnboardingSeenCount": 0,
+      "hasClaudeMdExternalIncludesApproved": false,
+      "hasClaudeMdExternalIncludesWarningShown": false
     }
   else . end
+' > ~/.claude.json.tmp && mv ~/.claude.json.tmp ~/.claude.json
+
+# Then update the kadlekai MCP server
+cat ~/.claude.json | jq --arg cwd "$CWD" --arg token "$API_TOKEN" --arg url "$API_URL" '
+  .projects[$cwd].mcpServers.kadlekai = {
+    "type": "stdio",
+    "command": "npx",
+    "args": ["--yes", "https://beskar-kadlekai-mcp.s3.amazonaws.com/packages/kadlekai-mcp-latest.tgz"],
+    "env": {
+      "KADLEKAI_API_TOKEN": $token,
+      "KADLEKAI_API_URL": $url
+    }
+  }
 ' > ~/.claude.json.tmp && mv ~/.claude.json.tmp ~/.claude.json
 ```
 
