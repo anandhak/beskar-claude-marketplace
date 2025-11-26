@@ -86,7 +86,7 @@ cat ~/.claude.json | jq --arg cwd "$CWD" --arg token "$API_TOKEN" --arg url "$AP
   .projects[$cwd].mcpServers.kadlekai = {
     "type": "stdio",
     "command": "npx",
-    "args": ["--yes", "https://beskar-kadlekai-mcp.s3.amazonaws.com/packages/kadlekai-mcp-latest.tgz"],
+    "args": ["--yes", "https://beskar-kadlekai-mcp.s3.amazonaws.com/packages/kadlekai-mcp-1.0.3.tgz"],
     "env": {
       "KADLEKAI_API_TOKEN": $token,
       "KADLEKAI_API_URL": $url
