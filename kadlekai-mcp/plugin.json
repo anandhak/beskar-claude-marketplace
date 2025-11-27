@@ -1,6 +1,6 @@
 {
   "name": "kadlekai-mcp",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Kadlekai time tracking MCP server integration for Claude Code with automatic activity tracking",
   "author": {
     "name": "Beskar",
@@ -33,6 +33,6 @@
     }
   },
   "postInstall": {
-    "message": "✅ Kadlekai MCP plugin installed!\n\n🎉 NEW: Automatic activity tracking is now enabled!\nYour Claude Code activity is captured automatically. Just work normally and run /time:reconcile at end of day.\n\n📋 Next steps:\n1. Set your API token: export KADLEKAI_API_TOKEN=your_token\n2. Set API URL (optional): export KADLEKAI_API_URL=https://kadle.ai\n3. Work normally - activity is tracked automatically!\n4. End of day: /time:reconcile to create time entries\n\nAvailable commands:\n• /time:reconcile - Auto-create entries from activity (NEW)\n• /time:activity - View captured activity (NEW)\n• /time:start - Manual timer start\n• /time:stop - Stop timer\n• /time:status - Check status\n• /time:report - Generate reports\n\nActivity log: ~/.kadlekai/activity.jsonl"
+    "message": "✅ Kadlekai MCP plugin installed!\n\n🎉 NEW: Automatic activity tracking is now enabled!\nYour Claude Code activity is captured automatically. Just work normally and run /time:reconcile at end of day.\n\n📋 Next steps:\n1. Run /time:setup to configure (choose Global or Project-only scope)\n2. Work normally - activity is tracked automatically!\n3. End of day: /time:reconcile to create time entries\n\nAvailable commands:\n• /time:setup - Interactive setup wizard (Global or Project-only)\n• /time:reconcile - Auto-create entries from activity\n• /time:activity - View captured activity\n• /time:start - Manual timer start\n• /time:stop - Stop timer\n• /time:status - Check status\n• /time:report - Generate reports\n\nActivity log: ~/.kadlekai/activity.jsonl"
   }
 }
