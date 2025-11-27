@@ -148,9 +148,77 @@ Generate detailed time tracking report.
 
 ---
 
+### `/reconcile` - Auto-Reconcile Activity (NEW)
+**Usage:** `/reconcile [date]`
+
+Automatically reconcile Claude Code activity into time entries. This is the **recommended** way to track time - just work naturally and reconcile at end of day.
+
+**Examples:**
+```
+/reconcile                       # Reconcile today's activity
+/reconcile yesterday             # Reconcile yesterday
+/reconcile 2025-11-27            # Reconcile specific date
+```
+
+**What it does:**
+1. Reads activity log from `~/.kadlekai/activity.jsonl`
+2. Groups activities into work sessions (by session or 30-min gaps)
+3. Extracts task descriptions from your prompts
+4. Shows unlogged sessions
+5. Creates time entries for approved sessions
+
+**How it works:**
+- Activity is captured automatically via hooks
+- User prompts describe what you worked on
+- Projects are detected from directory names
+- You review and approve before entries are created
+
+---
+
+### `/activity` - View Activity Log
+**Usage:** `/activity [date]`
+
+View raw activity log for debugging or review.
+
+**Examples:**
+```
+/activity                        # Today's activity
+/activity yesterday              # Yesterday's activity
+/activity all                    # Last 100 entries
+```
+
+**What it shows:**
+- Chronological list of all tracked activities
+- Session boundaries
+- Tools used and files modified
+- User prompts captured
+
+---
+
 ## Quick Workflow Examples
 
-### Daily Workflow
+### Automatic Tracking (Recommended)
+
+**Just work naturally - Claude Code tracks your activity automatically!**
+
+```
+# Work on your tasks normally throughout the day...
+# Activity is captured via hooks
+
+# End of day - reconcile activity into time entries:
+/reconcile
+
+# Review what was captured:
+# Session 1: my-project (09:15 - 11:45, 2h 30m)
+#   - "Fix auth bug in handler"
+#   - "Add tests for auth module"
+#
+# Create time entries? [Yes/No]
+```
+
+### Manual Timer Workflow
+
+**For those who prefer explicit control:**
 
 **Morning:**
 ```
@@ -186,6 +254,22 @@ Generate detailed time tracking report.
 /log 2h iOS debugging starting at 9am
 /log 1.5h Backend API at 14:00
 /log 30m Code review yesterday at 3pm
+```
+
+### Hybrid Approach
+
+**Combine automatic tracking with manual control:**
+
+```
+# Let automatic tracking run in background
+# Use /start for important milestones:
+/start Sprint 5 - User Authentication
+
+# Work throughout the day...
+
+# End of day - see both manual and auto-tracked:
+/reconcile
+/status
 ```
 
 ### Weekly Review
