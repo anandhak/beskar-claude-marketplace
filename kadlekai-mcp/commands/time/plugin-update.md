@@ -1,19 +1,15 @@
 # Update Kadlekai Plugin
 
-Update to the latest version of the Kadlekai plugin from the marketplace.
-
-## Instructions
-
-Run the following commands to update the plugin and MCP server:
+To update to the latest version, run these commands in a **separate terminal** (not via Claude):
 
 ```bash
-claude plugins update kadlekai-mcp@kadlekai-marketplace && rm -rf ~/.npm/_npx/*kadlekai* 2>/dev/null && echo "Updated! Restart Claude Code to use the new version."
+# Step 1: Update plugin from marketplace
+claude plugins update kadlekai-mcp@kadlekai-marketplace
+
+# Step 2: Clear MCP server cache
+rm -rf ~/.npm/_npx/*kadlekai*
+
+# Step 3: Restart Claude Code (exit and reopen)
 ```
 
-After running, restart your Claude Code session to load the updated plugin.
-
-## What this does
-
-1. **Updates plugin** - Downloads latest commands, hooks, and configuration from marketplace
-2. **Clears MCP cache** - Ensures fresh MCP server download on next session
-3. **Restart required** - New version loads when you start a new Claude Code session
+The `claude plugins update` command is interactive and needs to run in your terminal directly.
