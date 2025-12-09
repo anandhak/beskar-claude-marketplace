@@ -282,19 +282,15 @@ View raw activity log for debugging or review.
 
 ---
 
-### `/update` - Update MCP Server
-**Usage:** `/update`
+### `/plugin-update` - Update Plugin
+**Usage:** `/time:plugin-update`
 
-Update to the latest version of the Kadlekai MCP server.
+Update to the latest version of the Kadlekai plugin from the marketplace.
 
 **What it does:**
-1. Clears the npx cache for Kadlekai package
-2. Next Claude Code session downloads fresh version
-
-**To update plugin commands:**
-```bash
-claude plugins update kadlekai-mcp@kadlekai-marketplace
-```
+1. Updates plugin from marketplace (commands, hooks, config)
+2. Clears MCP server cache
+3. Restart Claude Code to use new version
 
 ---
 
@@ -313,14 +309,9 @@ claude plugins update kadlekai-mcp@kadlekai-marketplace
 
 The plugin uses `kadlekai-mcp-latest.tgz` URL, so clearing the npx cache automatically gets the newest MCP server version.
 
-**Update MCP server (tools):**
+**Update plugin:**
 ```
-/time:update
-```
-
-**Update plugin (commands, hooks):**
-```bash
-claude plugins update kadlekai-mcp@kadlekai-marketplace
+/time:plugin-update
 ```
 
 ---
