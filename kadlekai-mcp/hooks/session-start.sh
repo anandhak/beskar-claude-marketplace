@@ -8,7 +8,7 @@ ACTIVITY_FILE="$ACTIVITY_DIR/activity.jsonl"
 LATEST_VERSION_URL="https://beskar-kadlekai-mcp.s3.amazonaws.com/latest-version.txt"
 
 # Current installed version (updated on plugin install)
-CURRENT_VERSION="1.0.10"
+CURRENT_VERSION="1.0.11"
 
 # Ensure directory exists
 mkdir -p "$ACTIVITY_DIR"
