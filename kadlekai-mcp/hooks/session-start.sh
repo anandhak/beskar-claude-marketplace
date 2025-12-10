@@ -9,7 +9,7 @@ VERSION_FILE="$ACTIVITY_DIR/installed_version"
 LATEST_VERSION_URL="https://beskar-kadlekai-mcp.s3.amazonaws.com/latest-version.txt"
 
 # Current installed version (updated on plugin install)
-CURRENT_VERSION="1.0.8"
+CURRENT_VERSION="1.0.9"
 
 # Ensure directory exists
 mkdir -p "$ACTIVITY_DIR"

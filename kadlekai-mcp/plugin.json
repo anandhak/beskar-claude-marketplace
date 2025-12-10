@@ -1,6 +1,6 @@
 {
   "name": "kadlekai-mcp",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Kadlekai time tracking MCP server integration for Claude Code with automatic activity tracking",
   "author": {
     "name": "Beskar",
