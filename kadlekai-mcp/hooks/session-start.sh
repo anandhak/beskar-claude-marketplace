@@ -9,7 +9,7 @@ VERSION_FILE="$ACTIVITY_DIR/installed_version"
 LATEST_VERSION_URL="https://beskar-kadlekai-mcp.s3.amazonaws.com/latest-version.txt"
 
 # Current installed version (updated on plugin install)
-CURRENT_VERSION="1.0.7"
+CURRENT_VERSION="1.0.8"
 
 # Ensure directory exists
 mkdir -p "$ACTIVITY_DIR"
@@ -44,17 +44,12 @@ ENTRY=$(jq -n \
 
 echo "$ENTRY" >> "$ACTIVITY_FILE"
 
-# Check for plugin updates (background, non-blocking, with timeout)
-check_for_updates() {
-    LATEST_VERSION=$(curl -s --connect-timeout 2 --max-time 3 "$LATEST_VERSION_URL" 2>/dev/null | tr -d '[:space:]')
+# Check for plugin updates (with short timeout)
+LATEST_VERSION=$(curl -s --connect-timeout 1 --max-time 2 "$LATEST_VERSION_URL" 2>/dev/null | tr -d '[:space:]')
 
-    if [ -n "$LATEST_VERSION" ] && [ "$LATEST_VERSION" != "$CURRENT_VERSION" ]; then
-        echo "🆕 Kadlekai plugin update available: $CURRENT_VERSION → $LATEST_VERSION. Run /time:plugin-update"
-    fi
-}
-
-# Run update check (silently fail if network unavailable)
-check_for_updates 2>/dev/null &
+if [ -n "$LATEST_VERSION" ] && [ "$LATEST_VERSION" != "$CURRENT_VERSION" ]; then
+    echo "🆕 Kadlekai update available: $CURRENT_VERSION → $LATEST_VERSION. Run /time:plugin-update"
+fi
 
 # Display reminder with activity tracking info
 echo "⏱️ Kadlekai: Activity tracking enabled. Use /time:reconcile at end of day."
