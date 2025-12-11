@@ -99,7 +99,7 @@ Options:
 ### Step 8: Create Worklogs
 
 For approved sessions, call `mcp__kadlekai__create_worklog` with:
-- description: Combined user prompts or "Development work on [project]"
+- description: **Keep it short** (max 100 chars). Use brief action words like "Auth bug fix", "API tests", "Profile endpoint". Summarize prompts concisely.
 - start_time: Session start (ISO 8601)
 - end_time: Session end (ISO 8601)
 - project_id: Matched project ID
@@ -112,8 +112,8 @@ Show what was created:
 ```
 ## Created Time Entries
 
-✅ 2h 30m - "Fix auth bug, add tests" (Project X)
-✅ 2h 30m - "Implement user profile API" (Project Y)
+✅ 2h 30m - "Auth fix, tests" (Project X)
+✅ 2h 30m - "Profile API" (Project Y)
 
 Total logged: 5h 0m
 
