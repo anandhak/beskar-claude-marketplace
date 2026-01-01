@@ -1,6 +1,6 @@
 {
   "name": "kadlekai-mcp",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "Kadlekai time tracking MCP server integration for Claude Code with automatic activity tracking",
   "author": {
     "name": "Beskar",
@@ -24,7 +24,7 @@
       "command": "npx",
       "args": [
         "-y",
-        "https://beskar-kadlekai-mcp.s3.amazonaws.com/packages/kadlekai-mcp-latest.tgz"
+        "https://beskar-kadlekai-mcp.s3.amazonaws.com/packages/kadlekai-mcp-1.0.5.tgz"
       ],
       "env": {
         "KADLEKAI_API_TOKEN": "${KADLEKAI_API_TOKEN}",
