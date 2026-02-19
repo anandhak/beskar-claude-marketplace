@@ -62,7 +62,7 @@ esac
 PROJECT_NAME=$(basename "$CWD" 2>/dev/null || echo "unknown")
 
 # Create activity log entry
-ENTRY=$(jq -n \
+ENTRY=$(jq -cn \
     --arg ts "$TIMESTAMP" \
     --arg event "$HOOK_EVENT" \
     --arg session "$SESSION_ID" \
@@ -70,15 +70,7 @@ ENTRY=$(jq -n \
     --arg project "$PROJECT_NAME" \
     --arg tool "$TOOL_NAME" \
     --arg context "$CONTEXT" \
-    '{
-        ts: $ts,
-        event: $event,
-        session_id: $session,
-        project_dir: $project_dir,
-        project: $project,
-        tool: $tool,
-        context: $context
-    }')
+    '{ts:$ts,event:$event,session_id:$session,project_dir:$project_dir,project:$project,tool:$tool,context:$context}')
 
 # Append to activity log
 echo "$ENTRY" >> "$ACTIVITY_FILE"

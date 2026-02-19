@@ -22,7 +22,7 @@ PROJECT_NAME=$(basename "$CWD" 2>/dev/null || echo "unknown")
 ACTIVITY_COUNT=$(grep -c "\"session_id\":\"$SESSION_ID\"" "$ACTIVITY_FILE" 2>/dev/null || echo "0")
 
 # Log session end
-ENTRY=$(jq -n \
+ENTRY=$(jq -cn \
     --arg ts "$TIMESTAMP" \
     --arg event "SessionEnd" \
     --arg session "$SESSION_ID" \
@@ -30,15 +30,7 @@ ENTRY=$(jq -n \
     --arg project "$PROJECT_NAME" \
     --arg tool "" \
     --arg context "session_end:activities=$ACTIVITY_COUNT" \
-    '{
-        ts: $ts,
-        event: $event,
-        session_id: $session,
-        project_dir: $project_dir,
-        project: $project,
-        tool: $tool,
-        context: $context
-    }')
+    '{ts:$ts,event:$event,session_id:$session,project_dir:$project_dir,project:$project,tool:$tool,context:$context}')
 
 echo "$ENTRY" >> "$ACTIVITY_FILE"
 

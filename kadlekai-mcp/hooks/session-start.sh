@@ -8,7 +8,7 @@ ACTIVITY_FILE="$ACTIVITY_DIR/activity.jsonl"
 LATEST_VERSION_URL="https://beskar-kadlekai-mcp.s3.amazonaws.com/latest-version.txt"
 
 # Current installed version (updated on plugin install)
-CURRENT_VERSION="1.0.13"
+CURRENT_VERSION="1.0.15"
 
 # Ensure directory exists
 mkdir -p "$ACTIVITY_DIR"
@@ -23,7 +23,7 @@ CWD=$(echo "$INPUT" | jq -r '.cwd // empty')
 PROJECT_NAME=$(basename "$CWD" 2>/dev/null || echo "unknown")
 
 # Log session start
-ENTRY=$(jq -n \
+ENTRY=$(jq -cn \
     --arg ts "$TIMESTAMP" \
     --arg event "SessionStart" \
     --arg session "$SESSION_ID" \
@@ -31,15 +31,7 @@ ENTRY=$(jq -n \
     --arg project "$PROJECT_NAME" \
     --arg tool "" \
     --arg context "session_start" \
-    '{
-        ts: $ts,
-        event: $event,
-        session_id: $session,
-        project_dir: $project_dir,
-        project: $project,
-        tool: $tool,
-        context: $context
-    }')
+    '{ts:$ts,event:$event,session_id:$session,project_dir:$project_dir,project:$project,tool:$tool,context:$context}')
 
 echo "$ENTRY" >> "$ACTIVITY_FILE"
 

@@ -28,7 +28,7 @@ if [ -z "$PROMPT" ]; then
 fi
 
 # Log user prompt
-ENTRY=$(jq -n \
+ENTRY=$(jq -cn \
     --arg ts "$TIMESTAMP" \
     --arg event "UserPrompt" \
     --arg session "$SESSION_ID" \
@@ -36,15 +36,7 @@ ENTRY=$(jq -n \
     --arg project "$PROJECT_NAME" \
     --arg tool "" \
     --arg context "prompt:$PROMPT" \
-    '{
-        ts: $ts,
-        event: $event,
-        session_id: $session,
-        project_dir: $project_dir,
-        project: $project,
-        tool: $tool,
-        context: $context
-    }')
+    '{ts:$ts,event:$event,session_id:$session,project_dir:$project_dir,project:$project,tool:$tool,context:$context}')
 
 echo "$ENTRY" >> "$ACTIVITY_FILE"
 
