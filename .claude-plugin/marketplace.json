@@ -7,7 +7,7 @@
   "plugins": [
     {
       "name": "kadlekai-mcp",
-      "version": "1.0.15",
+      "version": "1.0.16",
       "description": "MCP server for Kadlekai time tracking - manage timers, worklogs, projects, and reports. Auto-detects user timezone.",
       "author": {
         "name": "Beskar Technologies",
