@@ -94,7 +94,7 @@ fi
 After creating all maps, output:
 - List of maps created with node/edge counts
 - Total source files now covered
-- Suggested next steps (run `/codemap-status` to see coverage)
+- Suggested next steps (run `/codemap-navigator:codemap-status` to see coverage)
 
 ## Example Output
 
@@ -105,7 +105,7 @@ After creating all maps, output:
    reports.yaml       — 7 nodes, 6 edges (ReportsSection → ReportsService)
    calendar.yaml      — 11 nodes, 10 edges (Calendar → WeeklyView → Serializers)
 
-Run /codemap-status to see coverage and identify gaps.
+Run /codemap-navigator:codemap-status to see coverage and identify gaps.
 ```
 
 Create the `codemaps/` directory if it doesn't exist:

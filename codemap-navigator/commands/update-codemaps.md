@@ -13,7 +13,7 @@ Incrementally update codemaps for feature areas that have changed since the last
 LAST_CODEMAP=$(git log -1 --format="%H" -- codemaps/ 2>/dev/null)
 
 if [ -z "$LAST_CODEMAP" ]; then
-  echo "No previous codemap commits found — run /build-codemaps first"
+  echo "No previous codemap commits found — run /codemap-navigator:build-codemaps first"
   exit 0
 fi
 
@@ -104,5 +104,5 @@ chore: Update codemaps for <feature-area> after <brief description of change>
    app/services/new_feature_service.rb
    app/frontend/components/NewFeature.jsx
    app/controllers/api/v1/new_feature_controller.rb
-   → Consider running /build-codemaps to add a new feature map
+   → Consider running /codemap-navigator:build-codemaps to add a new feature map
 ```

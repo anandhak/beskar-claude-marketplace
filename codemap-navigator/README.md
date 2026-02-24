@@ -10,7 +10,7 @@ codemap-navigator is a Claude Code plugin that enables token-efficient codebase 
 
 1. **Install the plugin**:
 ```bash
-claude plugin marketplace add kadlekai-marketplace https://gitlab.beskar.tech/beskar-marketplace/beskar-claude-marketplace.git
+claude plugin marketplace add https://gitlab.beskar.tech/beskar-marketplace/beskar-claude-marketplace.git
 claude plugin install codemap-navigator@kadlekai-marketplace
 ```
 
@@ -134,7 +134,7 @@ Haiku-based agent that prioritizes codemaps over grep:
 
 - Claude Code installed and running
 - Git repository with source code
-- No external dependencies (pure bash + Claude native tools)
+- No required external runtime dependencies for core plugin features (optional helpers may use python3/ruby if present)
 
 ### Framework Support
 
@@ -219,7 +219,7 @@ Next: Create a map for one of the top unmapped areas
 | "No codemaps directory found" | Run `/codemap-navigator:build-codemaps` to bootstrap. Creates `codemaps/` and generates initial YAML maps. |
 | Maps feel incomplete | Run `/codemap-navigator:codemap-status` to see coverage and suggested next areas. Add maps for high-activity unmapped directories. |
 | Mermaid diagrams don't regenerate | `codemap-to-mermaid.rb` script is Rails-specific. In non-Rails projects, YAML maps work standalone (diagrams are optional). |
-| Staleness warnings are too frequent | Edit `.git/hooks/post-commit` or `codemap-staleness-check.sh` to adjust file patterns or time threshold. Defaults warn on changes within 6 hours. |
+| Staleness warnings are too frequent | Edit `hooks/hooks.json` or `hooks/codemap-staleness-check.sh` to adjust file patterns or time threshold. Defaults warn on changes within 6 hours. |
 
 ---
 
@@ -231,5 +231,5 @@ Next: Create a map for one of the top unmapped areas
 - **Update command details**: `commands/update-codemaps.md`
 - **QuickExplore agent**: `agents/QuickExplore.md`
 - **Staleness hook**: `hooks/codemap-staleness-check.sh`
-- **Plugin config**: `plugin.json`
+- **Plugin config**: `.claude-plugin/plugin.json`
 - **Beskar Marketplace**: https://gitlab.beskar.tech/beskar-marketplace/beskar-claude-marketplace

@@ -9,7 +9,7 @@ Generate a coverage report showing what's mapped, what's not, and what to map ne
 ## Step 1: List All Codemaps
 
 ```bash
-ls -la codemaps/*.yaml 2>/dev/null || echo "No codemaps found — run /build-codemaps"
+ls -la codemaps/*.yaml 2>/dev/null || echo "No codemaps found — run /codemap-navigator:build-codemaps"
 ```
 
 For each `.yaml` file, extract stats:
@@ -81,5 +81,5 @@ Top unmapped areas (by file count):
 
 💡 Suggested next map: app/frontend/components/modals/
    → Many modal components, recently active, no coverage
-   → Run: /build-codemaps (it will focus on this area)
+   → Run: /codemap-navigator:build-codemaps (it will focus on this area)
 ```

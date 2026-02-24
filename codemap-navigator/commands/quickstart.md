@@ -153,4 +153,4 @@ git add codemaps/
 git status
 ```
 
-Ask: *"Want me to commit this map, or run `/build-codemaps` to generate maps for all feature areas now?"*
+Ask: *"Want me to commit this map, or run `/codemap-navigator:build-codemaps` to generate maps for all feature areas now?"*

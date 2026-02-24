@@ -14,7 +14,7 @@ tools:
 **Before grepping, check if a codemap covers the area.** Run this to see available maps:
 
 ```bash
-ls codemaps/*.yaml 2>/dev/null || echo "No codemaps directory found — run /build-codemaps to create maps"
+ls codemaps/*.yaml 2>/dev/null || echo "No codemaps directory found — run /codemap-navigator:build-codemaps to create maps"
 ```
 
 If codemaps exist, read the relevant one first. Each YAML map has:
@@ -59,4 +59,4 @@ If `codemaps/` is empty or missing:
 1. Use `Glob` to list top-level directories: `ls -la src/ app/ lib/ 2>/dev/null`
 2. Identify the framework from config files (`package.json`, `Gemfile`, `pyproject.toml`)
 3. Navigate by convention (Rails: `app/controllers/`, `app/services/`, `app/models/`)
-4. Suggest running `/build-codemaps` to create maps for future sessions
+4. Suggest running `/codemap-navigator:build-codemaps` to create maps for future sessions

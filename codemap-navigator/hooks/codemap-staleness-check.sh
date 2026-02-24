@@ -2,7 +2,7 @@
 
 # Codemap Staleness Check Hook
 # Generic hook for any project — warns when architecture files have been committed
-# more recently than codemaps/, suggesting an /update-codemaps run.
+# more recently than codemaps/, suggesting an /codemap-navigator:update-codemaps run.
 #
 # Installation: Add to .claude/settings.json UserPromptSubmit hooks:
 # {
@@ -62,6 +62,6 @@ if [ "$LAST_ARCH_TS" -gt "$LAST_CODEMAP_TS" ]; then
   echo "ℹ️  Codemaps may be stale"
   echo "   Architecture last changed: $ARCH_DATE"
   echo "   Codemaps last updated:     $CODEMAP_DATE"
-  echo "   Consider running: /update-codemaps"
+  echo "   Consider running: /codemap-navigator:update-codemaps"
   echo ""
 fi
