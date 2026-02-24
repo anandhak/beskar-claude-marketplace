@@ -23,7 +23,7 @@
     },
     {
       "name": "codemap-navigator",
-      "version": "1.0.1",
+      "version": "1.0.2",
       "description": "Token-efficient codebase navigation via YAML architecture maps. Codemap-aware Explore agent, /codemap-navigator:build-codemaps, /codemap-navigator:update-codemaps, /codemap-navigator:codemap-status skills, and staleness hook. Works with Rails, Django, Next.js, Express, and more.",
       "author": {
         "name": "Beskar Technologies",
