@@ -1,6 +1,6 @@
 ---
-name: Explore
-description: Fast, token-efficient codebase exploration. Reads YAML architecture codemaps from the codemaps/ directory before grepping. Use for questions about codebase structure, finding files, tracing feature flows, and understanding relationships between components.
+name: QuickExplore
+description: Token-efficient codebase exploration using YAML architecture codemaps. Reads codemaps/ first, then does targeted file reads — skipping broad grep searches. Best when codemaps exist and are up to date. For exhaustive or uncertain exploration where codemaps may be incomplete, use the default Explore agent instead.
 model: haiku
 tools:
   - Read
