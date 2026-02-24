@@ -1,0 +1,71 @@
+codemap:
+  id: plugin-anatomy
+  title: Claude Code Plugin Structure — Marketplace to Commands
+  description: |
+    How a Claude Code plugin is structured from marketplace registry down to
+    individual commands, agents, and hooks. Use codemap-navigator as the canonical example.
+
+    GOTCHA: Commands are loaded from commands/*.md (flat) or commands/<category>/*.md (nested).
+            Nested gives slash commands like plugin:category:name (e.g. kadlekai-mcp:time:start).
+            Flat gives plugin:name (e.g. codemap-navigator:build-codemaps).
+    GOTCHA: plugin.json at root OR .claude-plugin/plugin.json — Claude Code supports both.
+            "commands" key points to the commands dir; "hooks" key points to hooks.json.
+    GOTCHA: Agents need YAML frontmatter with name/model/tools. The filename is irrelevant —
+            the 'name:' field in frontmatter determines the agent name shown to users.
+    GOTCHA: hooks.json must use ${CLAUDE_PLUGIN_ROOT} for paths — absolute paths break on install.
+    GOTCHA: Plugin commands only appear after a full Claude restart (Cmd+Q), not a new session.
+  nodes:
+    - id: marketplace-index
+      label: .claude-plugin/marketplace.json
+      type: config
+      description: Registry listing all plugins with name, version, description, source path
+    - id: plugin-manifest
+      label: codemap-navigator/plugin.json
+      type: config
+      description: Plugin manifest — declares commands dir, skills dir, hooks file; no agents key needed (auto-discovered)
+    - id: installed-plugins
+      label: ~/.claude/plugins/installed_plugins.json
+      type: config
+      description: Claude Code tracks installed plugins here with installPath and gitCommitSha; updated by claude plugin install
+    - id: command-file
+      label: codemap-navigator/commands/build-codemaps.md
+      type: entry
+      description: Slash command — YAML frontmatter with description: only; body is the prompt injected when user runs /plugin:command
+    - id: agent-file
+      label: codemap-navigator/agents/QuickExplore.md
+      type: entry
+      description: Agent definition — YAML frontmatter with name/description/model/tools; body is system prompt for the agent
+    - id: hooks-json
+      label: codemap-navigator/hooks/hooks.json
+      type: config
+      description: Registers hooks by event (UserPromptSubmit etc); uses ${CLAUDE_PLUGIN_ROOT} for script paths
+    - id: hook-script
+      label: codemap-navigator/hooks/codemap-staleness-check.sh
+      type: script
+      description: Shell script run on UserPromptSubmit; warns if architecture files are newer than codemaps
+    - id: skills-dir
+      label: codemap-navigator/skills/build-codemaps/SKILL.md
+      type: doc
+      description: Bundled skill docs — loaded into context but NOT directly slash-invocable; supplements command prompts
+  edges:
+    - from: marketplace-index
+      to: plugin-manifest
+      relationship: source_points_to_plugin_dir
+    - from: plugin-manifest
+      to: command-file
+      relationship: commands_key_points_to_dir
+    - from: plugin-manifest
+      to: hooks-json
+      relationship: hooks_key_points_to
+    - from: hooks-json
+      to: hook-script
+      relationship: registers_via_CLAUDE_PLUGIN_ROOT
+    - from: marketplace-index
+      to: installed-plugins
+      relationship: claude_plugin_install_writes_here
+    - from: plugin-manifest
+      to: skills-dir
+      relationship: skills_key_points_to_dir
+    - from: agent-file
+      to: plugin-manifest
+      relationship: auto_discovered_from_agents_dir
