@@ -17,7 +17,7 @@
     "explore",
     "codebase"
   ],
-  "agents": "./agents",
+  "commands": "./commands",
   "skills": "./skills",
   "hooks": "./hooks/hooks.json"
 }
