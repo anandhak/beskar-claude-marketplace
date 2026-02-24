@@ -2,7 +2,7 @@
   "name": "kadlekai-marketplace",
   "owner": {
     "name": "Beskar Technologies",
-    "email": "dev@beskar.tech"
+    "email": "jake@beskar.tech"
   },
   "plugins": [
     {
@@ -11,7 +11,7 @@
       "description": "MCP server for Kadlekai time tracking - manage timers, worklogs, projects, and reports. Auto-detects user timezone.",
       "author": {
         "name": "Beskar Technologies",
-        "email": "dev@beskar.tech"
+        "email": "jake@beskar.tech"
       },
       "keywords": [
         "time-tracking",
@@ -20,6 +20,24 @@
         "reports"
       ],
       "source": "./kadlekai-mcp"
+    },
+    {
+      "name": "codemap-navigator",
+      "version": "1.0.0",
+      "description": "Token-efficient codebase navigation via YAML architecture maps. Codemap-aware Explore agent, /build-codemaps, /update-codemaps, /codemap-status skills, and staleness hook. Works with Rails, Django, Next.js, Express, and more.",
+      "author": {
+        "name": "Beskar Technologies",
+        "email": "jake@beskar.tech"
+      },
+      "keywords": [
+        "codemaps",
+        "navigation",
+        "architecture",
+        "token-efficient",
+        "explore",
+        "codebase"
+      ],
+      "source": "./codemap-navigator"
     }
   ]
 }
