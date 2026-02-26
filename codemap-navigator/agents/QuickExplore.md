@@ -31,6 +31,8 @@ ls codemaps/INDEX.yaml codemaps/*.yaml 2>/dev/null | head -5 || echo "No codemap
 3. Match keywords against each map's `scope` field
 4. Use `Read` to load only the 1–3 maps with the highest keyword overlap
 5. If no clear match, read the 1–2 maps most likely by topic
+6. Check `related_maps` on loaded maps to find adjacent feature areas without loading all maps
+7. If INDEX.yaml has a `gotchas:` section, scan entries whose `maps` list overlaps with loaded maps — surface relevant gotchas in your answer
 
 **If no INDEX.yaml but `codemaps/*.yaml` exist (fallback path):**
 1. Inspect the available map filenames to identify the most relevant ones

@@ -57,6 +57,22 @@ Rank uncovered file clusters by:
 1. **Most files in a directory** → highest value to map
 2. **Most recently modified** (`git log --format="%ar" -- <path>`) → most active area
 3. **Most referenced** (files imported/required by many others) → highest leverage
+4. **Highest commit churn** → files that change most often have highest ROI to document
+
+```bash
+# Get commit count per uncovered file (top 10 by churn)
+for f in $UNCOVERED_FILES; do
+  count=$(git log --oneline -- "$f" 2>/dev/null | wc -l | tr -d ' ')
+  echo "$count $f"
+done | sort -rn | head -10
+```
+
+Include churn counts in the output:
+```
+Top unmapped files by commit frequency:
+  42 commits  app/services/worklog_service.rb
+  31 commits  app/controllers/api/v1/worklogs_controller.rb
+```
 
 ## Step 6: Output Report
 
