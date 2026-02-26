@@ -66,6 +66,7 @@ For each affected codemap:
 - New relationship between existing components (add edge)
 - Critical gotcha discovered (add to description)
 - Field names or API contracts changed (update description)
+- File moves between feature areas (update `related_maps` cross-references)
 
 **What does NOT warrant an update:**
 - Bug fixes that don't change architecture
