@@ -11,24 +11,39 @@ tools:
 
 # Architecture Map Navigation
 
-**Before grepping, check if a codemap covers the area.** Run this to see available maps:
+**Before grepping, check if a codemap covers the area.**
 
-```bash
-ls codemaps/*.yaml 2>/dev/null || echo "No codemaps directory found — run /codemap-navigator:build-codemaps to create maps"
-```
-
-If codemaps exist, read the relevant one first. Each YAML map has:
+Each YAML map has:
 - `nodes` — files with their `label` (exact path) and `type` (component/service/model/etc.)
 - `edges` — relationships between nodes with a `relationship` verb
 - `description` — includes gotchas and non-obvious patterns
 
 ## Navigation Strategy
 
-1. **List available codemaps** (`ls codemaps/*.yaml`) and read the relevant one
-2. **Use `label` fields** as exact file paths — no need to search
-3. **Follow `edges`** to understand data flow and dependencies
-4. **Read full files only when** the map doesn't cover the detail needed
-5. **Report findings with node IDs** (e.g., "node: auth-service → app/services/auth_service.rb")
+**Step 1 — Discover available maps:**
+```bash
+ls codemaps/INDEX.yaml codemaps/*.yaml 2>/dev/null | head -5 || echo "No codemaps directory found — run /codemap-navigator:build-codemaps to create maps"
+```
+
+**If `codemaps/INDEX.yaml` exists (preferred path):**
+1. Read `codemaps/INDEX.yaml` to get the map directory with `scope` keywords per map
+2. Extract 3–5 keywords from the user's question
+3. Match keywords against each map's `scope` field
+4. Use `Read` to load only the 1–3 maps with the highest keyword overlap
+5. If no clear match, read the 1–2 maps most likely by topic
+
+**If no INDEX.yaml but `codemaps/*.yaml` exist (fallback path):**
+1. Inspect the available map filenames to identify the most relevant ones
+2. Read the 1–2 most relevant maps with the `Read` tool
+
+**Step 2 — Answer from loaded maps:**
+- Use `label` fields as exact file paths — no need to search
+- Follow `edges` to understand data flow and dependencies
+- Use node `type` to understand component roles
+- Only Grep/Glob if loaded maps don't cover the area
+- Report findings with node IDs (e.g., "node: auth-service → app/services/auth_service.rb")
+
+**Fallback**: If after loading 3 maps the question is still unanswered, load remaining maps starting with those whose `scope` has partial keyword overlap. If no codemaps exist, navigate by framework conventions (Rails: `app/`, Next.js: `src/`).
 
 **Prefer:** Maps → Targeted `Read` calls → `Grep` as last resort
 
