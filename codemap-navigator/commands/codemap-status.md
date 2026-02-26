@@ -12,9 +12,10 @@ Generate a coverage report showing what's mapped, what's not, and what to map ne
 ls -la codemaps/*.yaml 2>/dev/null || echo "No codemaps found — run /codemap-navigator:build-codemaps"
 ```
 
-For each `.yaml` file, extract stats:
+For each `.yaml` file (excluding `INDEX.yaml`), extract stats:
 ```bash
 for yaml in codemaps/*.yaml; do
+  [ "$(basename "$yaml")" = "INDEX.yaml" ] && continue
   name=$(basename "$yaml" .yaml)
   nodes=$(grep -c "^    - id:" "$yaml" 2>/dev/null || echo 0)
   edges=$(grep -c "^    - from:" "$yaml" 2>/dev/null || echo 0)
