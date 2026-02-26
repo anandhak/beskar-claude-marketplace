@@ -9,7 +9,7 @@ Generate a coverage report showing what's mapped, what's not, and what to map ne
 ## Step 1: List All Codemaps
 
 ```bash
-ls -la codemaps/*.yaml 2>/dev/null || echo "No codemaps found — run /codemap-navigator:build-codemaps"
+ls -la codemaps/*.yaml 2>/dev/null | grep -v "INDEX.yaml" || echo "No codemaps found — run /codemap-navigator:build-codemaps"
 ```
 
 For each `.yaml` file (excluding `INDEX.yaml`), extract stats:
@@ -61,8 +61,18 @@ Rank uncovered file clusters by:
 4. **Highest commit churn** → files that change most often have highest ROI to document
 
 ```bash
-# Get commit count per uncovered file (top 10 by churn)
-for f in $UNCOVERED_FILES; do
+# Build mapped file list and compute churn for uncovered files in one pass
+MAPPED=$(grep -h "      label:" codemaps/*.yaml 2>/dev/null | \
+  grep -v "INDEX.yaml" | sed 's/.*label: //' | sort -u)
+
+for dir in app/frontend/components app/frontend/hooks app/services \
+           app/controllers app/models app/jobs; do
+  [ -d "$dir" ] || continue
+  find "$dir" \( -name "*.rb" -o -name "*.jsx" -o -name "*.js" -o -name "*.ts" \) \
+    2>/dev/null | grep -v "node_modules\|\.test\.\|\.spec\."
+done | while read f; do
+  echo "$MAPPED" | grep -qx "$f" || echo "$f"
+done | while read f; do
   count=$(git log --oneline -- "$f" 2>/dev/null | wc -l | tr -d ' ')
   echo "$count $f"
 done | sort -rn | head -10
